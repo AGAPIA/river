@@ -65,4 +65,4 @@ COPY [".", "/River3"]
 WORKDIR /River3
 
 ENTRYPOINT [ "python3.6", "python/concolic_RLGenerationalSearch.py"]
-CMD ["--secondsBetweenStats", "2", "--architecture", "x64", "--maxLen", "1", "--outputType", "textual"]
+# CMD ["--secondsBetweenStats", "2", "--architecture", "x64", "--maxLen", "1", "--outputType", "textual"]
