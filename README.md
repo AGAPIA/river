@@ -37,8 +37,10 @@ Step 1: Clone this repo with --recursive option, since we have some external sub
 
 Step 2: Build Triton from ExternalTools/Triton with Python bindings as documented in the README.md file in the submodule, or use their latest info on https://github.com/JonathanSalwan/Triton 
 
-Step 3: Install LIEF either from ExternalTools or with ```pip install lief```, or as according to their documentation: https://github.com/lief-project/LIEF 
-Note that by taking the versions inside submodules, it is guaranteed to compile correctly with the current River 3.0 API. 
+Step 3: Install LIEF with ```pip install lief```. If you encounter any problems
+you can build LIEF from **ExternalTools/**, according to the project's [documentation](https://github.com/lief-project/LIEF).
+
+Step 4: Install `numpy` with `pip install numpy`.
 
 To check if everything is working correctly, open you Python interface (tested on Python 3.7) and check if the following commands work correctly:
 ```
@@ -48,9 +50,11 @@ import lief
 
 # Testing River 3.0
 
- Currently we have implemented as a proof of concept a Generic Concolic Executor and Generalitional Search (SAGE), first open-source version, see the original paper [here](https://patricegodefroid.github.io/public_psfiles/cacm2012.pdf)) that can be found in /River3/ConcolicExecution_Generic/python. The ```concolic_GenerationalSearch.py``` is the recommended one to use for performance 
- You can test it against the crackme_xor, sage, sage2, or other programs inside program inside River3/TestPrograms. You are free to modify and experiment with your own code or changes however.
- 
+Currently we have implemented as a proof of concept a Generic Concolic Executor and Generalitional Search (SAGE), first open-source version, see the original paper [here](https://patricegodefroid.github.io/public_psfiles/cacm2012.pdf)) that can be found in /River3/python.
+The `concolic_GenerationalSearch2.py` is the recommended one to use for performance.
+
+You can test it against the crackme_xor, sage, sage2, or other programs inside program inside River3/TestPrograms. You are free to modify and experiment with your own code or changes however.
+
 ## How to build your program for testing with our tools ? 
 Let's say you modify the crackme_xor.c code file and you want to compile it. (Note, -g and -O0 are not needed but they can help you in the process of debugging and understanding the asm code without optimizations).
 ```
@@ -58,16 +62,17 @@ gcc -g -O0 -o crackme_xor ./crackme_xor.c
 (you can use without -g or -O0)
 ```
 
-## How to use or concolic (SAGE-like) tool ? 
-Currently you can run concolic_GenerationalSearch.py with a sample of parameters like below.
+## How to use or concolic (SAGE-like) tool?
+Currently you can run `concolic_GenerationalSearch2.py` with a sample of parameters like below:
 
 ```
---binaryPath "../../samples/crackmes/sage2"
+--binaryPath "../TestPrograms/crackme_xor"
 --architecture x64
 --maxLen 1 
 --targetAddress 0x11d3
 --logLevel CRITICAL
 --secondsBetweenStats 10
+--outputType textual
 ```
 
 The targetAddress is optional; it is for "capture the flag"-like kind of things, where you want to get to a certain address in the binary code.
@@ -81,7 +86,6 @@ The architecture parameter can be set to x64, x86, ARM32, ARM64.
 ## How to use or concolic Reinforcement Learning based Concolic tool? 
 Same parameters as above. Note that our implementation is done using Tensorflow 2 (2.3 version was tested). You can modify manually the parameters of the model from RLConcolicModelTf.py script.
 
-
 ## Future work
  - Output graphics
  - Corpus folder like in libfuzzer
@@ -89,7 +93,6 @@ Same parameters as above. Note that our implementation is done using Tensorflow 
  - RL impl
  - Parallelization
  - We are going to convert the evaluation API to Google FuzzBench and Lava kind of benchmarks
- 
 
 # *Part 1: River and tracer tools*
 
@@ -97,7 +100,7 @@ Same parameters as above. Note that our implementation is done using Tensorflow 
 - Also, note that the process is described for all of our tools not just RIVER.
 - You can download Ubuntu 16.04.5 LTS from here (take 64-bit) : http://releases.ubuntu.com/16.04/
 
-# Steps setup 
+# Steps setup
 
 ## End-user Workflow:
 0. Be sure you install the latest cmake version first. The version tested was 3.14.
