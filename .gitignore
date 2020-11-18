@@ -41,7 +41,6 @@ CMakeCache.txt
 CMakeFiles
 CMakeScripts
 cmake_install.cmake
-Makefile
 BinLoader/Makefile
 Execution/Makefile
 SymbolicEnvironment/Makefile
